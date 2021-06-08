@@ -1,9 +1,8 @@
 #!/bin/bash
 
 NUMID_DRONE=107
-export AEROSTACK_PROJECT=${AEROSTACK_STACK}/projects/basic_mission_quadrotor_simulator
+export APPLICATION_PATH=${PWD}
 
-. ${AEROSTACK_STACK}/config/mission/setup.sh
 
 #---------------------------------------------------------------------------------------------
 # INTERNAL PROCESSES
@@ -15,8 +14,8 @@ gnome-terminal  \
 --tab --title "Quadrotor Simulator" --command "bash -c \"
 roslaunch quadrotor_simulator_process quadrotor_simulator.launch --wait \
     robot_namespace:=drone$NUMID_DRONE \
-    robot_config_path:=${AEROSTACK_PROJECT}/configs/drone$NUMID_DRONE \
-    rviz_config_path:=${AEROSTACK_PROJECT}/configs/rviz_files;
+    robot_config_path:=${APPLICATION_PATH}/configs/drone$NUMID_DRONE \
+    rviz_config_path:=${APPLICATION_PATH}/configs/rviz_files;
 exec bash\""  \
 `#---------------------------------------------------------------------------------------------` \
 `# Basic Behaviors                                                                             ` \
@@ -31,7 +30,7 @@ exec bash\"" \
 --tab --title "Quadrotor Motion With PID Control" --command "bash -c \"
 roslaunch quadrotor_motion_with_pid_control quadrotor_motion_with_pid_control.launch --wait \
     namespace:=drone$NUMID_DRONE \
-    robot_config_path:=${AEROSTACK_PROJECT}/configs/drone$NUMID_DRONE \
+    robot_config_path:=${APPLICATION_PATH}/configs/drone$NUMID_DRONE \
     uav_mass:=0.7;
 exec bash\""  \
 `#---------------------------------------------------------------------------------------------` \
@@ -41,7 +40,7 @@ exec bash\""  \
 roslaunch python_based_mission_interpreter_process python_based_mission_interpreter_process.launch --wait \
   drone_id_namespace:=drone$NUMID_DRONE \
   drone_id_int:=$NUMID_DRONE \
-  mission_configuration_folder:=${AEROSTACK_PROJECT}/configs/mission ;
+  mission_configuration_folder:=${APPLICATION_PATH}/configs/mission ;
 exec bash\""  \
 `#---------------------------------------------------------------------------------------------` \
 `# Behavior Execution Viewer                                                                   ` \
@@ -50,7 +49,7 @@ exec bash\""  \
 roslaunch behavior_execution_viewer behavior_execution_viewer.launch --wait \
   robot_namespace:=drone$NUMID_DRONE \
   drone_id:=$NUMID_DRONE \
-  catalog_path:=${AEROSTACK_PROJECT}/configs/mission/behavior_catalog.yaml;
+  catalog_path:=${APPLICATION_PATH}/configs/mission/behavior_catalog.yaml;
 exec bash\""  \
 `#---------------------------------------------------------------------------------------------` \
 `# Belief Manager                                                                              ` \
@@ -59,23 +58,23 @@ exec bash\""  \
 roslaunch belief_manager_process belief_manager_process.launch --wait \
     drone_id_namespace:=drone$NUMID_DRONE \
     drone_id:=$NUMID_DRONE \
-    config_path:=${AEROSTACK_PROJECT}/configs/mission;
+    config_path:=${APPLICATION_PATH}/configs/mission;
 exec bash\""  \
 `#---------------------------------------------------------------------------------------------` \
 `# Belief Updater                                                                              ` \
 `#---------------------------------------------------------------------------------------------` \
---tab --title "Belief Updater" --command "bash -c \"
-roslaunch belief_updater_process belief_updater_process.launch --wait \
-    drone_id_namespace:=drone$NUMID_DRONE \
-    drone_id:=$NUMID_DRONE;
-exec bash\""  \
+--tab --title "Common Belief Updater" --command "bash -c \"
+roslaunch common_belief_updater_process common_belief_updater_process.launch --wait \
+  drone_id_namespace:=drone$NUMID_DRONE \
+  drone_id:=$NUMID_DRONE;
+exec bash\""   \
 `#---------------------------------------------------------------------------------------------` \
 `# Behavior Coordinator                                                                       ` \
 `#---------------------------------------------------------------------------------------------` \
 --tab --title "Behavior coordinator" --command "bash -c \" sleep 5;
 roslaunch behavior_coordinator behavior_coordinator.launch --wait \
   robot_namespace:=drone$NUMID_DRONE \
-  catalog_path:=${AEROSTACK_PROJECT}/configs/mission/behavior_catalog.yaml;
+  catalog_path:=${APPLICATION_PATH}/configs/mission/behavior_catalog.yaml;
 exec bash\"" &
 
 #---------------------------------------------------------------------------------------------
@@ -97,3 +96,14 @@ exec bash\""  \
 roslaunch alphanumeric_viewer alphanumeric_viewer.launch  --wait \
     drone_id_namespace:=drone$NUMID_DRONE;
 exec bash\""  &
+
+sleep 10
+
+gnome-terminal  \
+`#---------------------------------------------------------------------------------------------` \
+`# Behavior Coordinator Loggr                                                                       ` \
+`#---------------------------------------------------------------------------------------------` \
+--tab --title "behavior_coordinator_logger"  --command "bash -c \"
+roslaunch behavior_coordinator_logger behavior_coordinator_logger.launch --wait \
+    drone_id_namespace:=drone$NUMID_DRONE;
+exec bash\""

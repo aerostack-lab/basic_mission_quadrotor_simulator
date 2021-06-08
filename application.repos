@@ -19,6 +19,7 @@ repositories:
     type: git 
     url: https://github.com/aerostack/quadrotor_motion_with_pid_control
     version: master
+
 #----------------------------------------------------------------------------
 # Belief updaters
 #----------------------------------------------------------------------------
@@ -33,6 +34,7 @@ repositories:
      type: git 
      url: https://github.com/aerostack/python_based_mission_interpreter
      version: master
+
 #----------------------------------------------------------------------------
 # Executive
 #----------------------------------------------------------------------------
@@ -40,21 +42,10 @@ repositories:
     type: git 
     url: https://github.com/cvar-upm/coordinator_cbc
     version: master
-  #----------------------------------------------------------------------------
-  # Integrar el behavior_execution_viewer con lo anterior (crear un behavior coordination viewer)
-  #----------------------------------------------------------------------------
-  executive/behavior_execution_viewer:
-    type: git 
-    url: https://github.com/aerostack/behavior_execution_viewer
-    version: master    
   executive/belief_manager:
     type: git
     url: https://github.com/aerostack/belief_manager
     version: master
-  #----------------------------------------------------------------------------
-  # Integrar el belief_memory_viewer con lo anterior
-  #----------------------------------------------------------------------------
-
 
 #----------------------------------------------------------------------------
 # Simulation
@@ -63,6 +54,11 @@ repositories:
     type: git 
     url: https://github.com/aerostack/quadrotor_simulator
     version: master
+    
+#----------------------------------------------------------------------------
+# Hardware interface
+#----------------------------------------------------------------------------
+
 #----------------------------------------------------------------------------
 # User interface
 #----------------------------------------------------------------------------
@@ -72,7 +68,6 @@ repositories:
     version: master
 #----------------------------------------------------------------------------
 # Libraries
-#    ¿Quizá se pueden poner grupos de librerias en un sólo repo?
 #----------------------------------------------------------------------------
   libraries/behaviorlib:
     type: git 
@@ -82,20 +77,6 @@ repositories:
     type: git 
     url: https://github.com/aerostack/robot_process
     version: master
-  #----------------------------------------------------------------------------
-  # Agrupar estos dos en catkin?
-  #----------------------------------------------------------------------------
-  libraries/catkin_simple:
-    type: git
-    url: https://github.com/aerostack/catkin_simple
-    version: master
-  libraries/eigen_catkin:
-    type: git 
-    url: https://github.com/aerostack/eigen_catkin
-    version: master
-  #----------------------------------------------------------------------------
-  # Agrupar estos dos en cvglib?
-  #----------------------------------------------------------------------------
   libraries/lib_cvgekf:
     type: git 
     url: https://github.com/aerostack/lib_cvgekf
@@ -104,25 +85,32 @@ repositories:
     type: git 
     url: https://github.com/aerostack/lib_cvgutils
     version: master
-  #----------------------------------------------------------------------------
-  # Sin agrupar 
-  #----------------------------------------------------------------------------
-  libraries/mav_comm:
-    type: git
-    url: https://github.com/aerostack/mav_comm
-    version: master
   libraries/pugixml:
     type: git 
     url: https://github.com/aerostack/pugixml
     version: master
-  #----------------------------------------------------------------------------
-  # Candidatos a borrar
-  #----------------------------------------------------------------------------
-
   libraries/ros_utils_lib:
     type: git 
-    url: https://bitbucket.org/visionaerialrobotics/ros_utils_lib
+    url: https://github.com/aerostack/ros_utils_lib
+    version: master    
+  libraries/catkin_simple:
+    type: git
+    url: https://github.com/aerostack/catkin_simple
     version: master
+  libraries/eigen_catkin:
+    type: git 
+    url: https://github.com/aerostack/eigen_catkin
+    version: master
+
+    
+#----------------------------------------------------------------------------
+# Example applications
+#----------------------------------------------------------------------------
+
+#----------------------------------------------------------------------------
+# Deprecated
+#----------------------------------------------------------------------------
+
 #----------------------------------------------------------------------------
 # Deprecated libraries
 #----------------------------------------------------------------------------
@@ -134,6 +122,14 @@ repositories:
     type: git 
     url: https://github.com/aerostack/dronemoduleros
     version: master
+  deprecated/libraries/lib_cvglogger:
+    type: git 
+    url: https://github.com/aerostack/lib_cvglogger
+    version: master
+  deprecated/libraries/lib_pose:
+    type: git 
+    url: https://github.com/aerostack/lib_pose
+    version: master
 
 #----------------------------------------------------------------------------
 # Deprecated messages
@@ -143,26 +139,4 @@ repositories:
     url: https://github.com/aerostack/dronemsgsros
     version: master
 
-#----------------------------------------------------------------------------
-# Deprecated loggers
-#----------------------------------------------------------------------------
-  deprecated/logging/lib_cvglogger:
-    type: git 
-    url: https://github.com/aerostack/lib_cvglogger
-    version: master   
-#----------------------------------------------------------------------------
-# Deprecated libraries
-#----------------------------------------------------------------------------
 
-  deprecated/libraries/lib_pose:
-    type: git 
-    url: https://github.com/aerostack/lib_pose
-    version: master
-
-#----------------------------------------------------------------------------
-# Borrar?
-#----------------------------------------------------------------------------
-  deprecated/common/behavior_execution_controller:
-    type: git 
-    url: https://github.com/aerostack/behavior_execution_controller
-    version: master
